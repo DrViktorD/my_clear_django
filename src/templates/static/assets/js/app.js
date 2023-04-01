@@ -16,17 +16,7 @@
             this.$leftMenuButton = $('.button-menu-mobile'),
             this.$menuItem = $('.has_sub > a')
     };
-
-    MainApp.prototype.intSlimscrollmenu = function () {
-        $('.slimscroll-menu').slimscroll({
-            height: 'auto',
-            position: 'right',
-            size: "7px",
-            color: '#9ea5ab',
-            wheelStep: 5,
-            touchScrollStep: 50
-        });
-    },
+    
     MainApp.prototype.initSlimscroll = function () {
         $('.slimscroll').slimscroll({
             height: 'auto',
@@ -37,40 +27,30 @@
         });
     },
 
-    MainApp.prototype.initMetisMenu = function () {
-        //metis menu
-        $("#side-menu").metisMenu();
-    },
+    MainApp.prototype.initNavbar = function () {
 
-    MainApp.prototype.initLeftMenuCollapse = function () {
-        // Left menu collapse
-        $('.button-menu-mobile').on('click', function (event) {
-            event.preventDefault();
-            $("body").toggleClass("enlarged");
+        $('.navbar-toggle').on('click', function (event) {
+            $(this).toggleClass('open');
+            $('#navigation').slideToggle(400);
+        });
+
+        $('.navigation-menu>li').slice(-1).addClass('last-elements');
+
+        $('.navigation-menu li.has-submenu a[href="#"]').on('click', function (e) {
+            if ($(window).width() < 992) {
+                e.preventDefault();
+                $(this).parent('li').toggleClass('open').find('.submenu:first').toggleClass('open');
+            }
         });
     },
 
-    MainApp.prototype.initEnlarge = function () {
-        if ($(window).width() < 1025) {
-            $('body').addClass('enlarged');
-        } else {
-            if ($('body').data('keep-enlarged') != true)
-                $('body').removeClass('enlarged');
-        }
-    },
-
     MainApp.prototype.initActiveMenu = function () {
-        // === following js will activate the menu in left side bar based on url ====
-        $("#sidebar-menu a").each(function () {
+        $(".navigation-menu a").each(function () {
             var pageUrl = window.location.href.split(/[?#]/)[0];
-            if (this.href == pageUrl) {
-                $(this).addClass("mm-active");
-                $(this).parent().addClass("mm-active"); // add active to li of the current link
-                $(this).parent().parent().addClass("mm-show");
-                $(this).parent().parent().prev().addClass("mm-active"); // add active class to an anchor
-                $(this).parent().parent().parent().addClass("mm-active");
-                $(this).parent().parent().parent().parent().addClass("mm-show"); // add active to li of the current link
-                $(this).parent().parent().parent().parent().parent().addClass("mm-active");
+            if (this.href == pageUrl) { 
+                $(this).parent().addClass("active"); // add active to li of the current link
+                $(this).parent().parent().parent().addClass("active"); // add active class to an anchor
+                $(this).parent().parent().parent().parent().parent().addClass("active"); // add active class to an anchor
             }
         });
     },
@@ -109,11 +89,8 @@
 
 
     MainApp.prototype.init = function () {
-        this.intSlimscrollmenu();
         this.initSlimscroll();
-        this.initMetisMenu();
-        this.initLeftMenuCollapse();
-        this.initEnlarge();
+        this.initNavbar();
         this.initActiveMenu();
         this.initComponents();
         this.initFullScreen();

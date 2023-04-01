@@ -54,7 +54,7 @@ table.focus-on {
   .fixed-solution{
     margin-bottom: 0px;
     .sticky-table-header {
-      top: 70px !important;
+      top: 130px !important;
     }
   }
   .btn-group.float-right .dropdown-menu {
@@ -146,3 +146,11 @@ table.focus-on {
     }
   }
 }
+
+
+@media (max-width: 991px) {
+  .table-rep-plugin .fixed-solution .sticky-table-header {
+    top: 70px !important;
+  }
+}
+
